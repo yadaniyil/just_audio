@@ -2,6 +2,8 @@
 // More advanced examples demonstrating other features can be found in the same
 // directory as this example in the GitHub repository.
 
+import 'dart:io';
+
 import 'package:audio_session/audio_session.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -43,8 +45,14 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     });
     // Try to load audio from a source and catch any errors.
     try {
-      await _player.setAudioSource(AudioSource.uri(Uri.parse(
-          "https://s3.amazonaws.com/scifri-episodes/scifri20181123-episode.mp3")));
+      await _player.setAudioSource(AudioSource.uri(
+          Uri.parse(
+              "https://secure.mbl.is/mogginn/rpc/mp3/2022-05-14/yfirlit_y.mp3"),
+          headers: {
+            HttpHeaders.contentTypeHeader: "application/json",
+            HttpHeaders.authorizationHeader:
+                "Basic OTk4ODc3NjY1NTpBcHBsZVRlc3QyMDEy",
+          }));
     } catch (e) {
       print("Error loading audio source: $e");
     }
